@@ -4,7 +4,7 @@ const updateBalance = async (req, res) => {
   try {
     const { _id } = req.user
     const { balance } = req.body
-    console.log(balance)
+    // console.log(balance)
     if (balance > 0) {
       const user = await User.findByIdAndUpdate(
         _id,

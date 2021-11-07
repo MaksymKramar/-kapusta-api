@@ -28,7 +28,7 @@ const login = async (req, res) => {
     await User.findByIdAndUpdate(user._id, { token })
 
     res.json({
-      status: 'success',
+      status: '✔️ Success',
       code: 200,
       data: {
         token,
