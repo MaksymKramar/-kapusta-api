@@ -3,7 +3,7 @@ const { Conflict } = require('http-errors')
 
 const signup = async (req, res) => {
   try {
-    const { email, password, balance } = req.body
+    const { name, email, password, balance } = req.body
     console.log(req.body)
     const user = await User.findOne({ email })
 
@@ -11,7 +11,7 @@ const signup = async (req, res) => {
       throw new Conflict('Already register')
     }
 
-    const newUser = new User({ email, balance })
+    const newUser = new User({ name, email, balance })
     newUser.setPassword(password)
     await newUser.save()
 

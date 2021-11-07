@@ -5,6 +5,10 @@ const emailRegexp = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-z
 
 const userSchema = Schema(
   {
+    name: {
+      type: String,
+      required: [true, 'name is required'],
+    },
     password: {
       type: String,
       required: [true, 'Password is required'],
@@ -34,6 +38,7 @@ userSchema.methods.comparePassword = function (password) {
 }
 
 const joiSchema = Joi.object({
+  name: Joi.string().min(2).max(30),
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).required(),
   balance: Joi.number(),
