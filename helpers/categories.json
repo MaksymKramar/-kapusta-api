@@ -1,0 +1,54 @@
+[
+  {
+    "title": "Продукты",
+    "type": "expenses"
+  },
+  {
+    "title": "Алкоголь",
+    "type": "expenses"
+  },
+  {
+    "title": "Развлечение",
+    "type": "expenses"
+  },
+  {
+    "title": "Здоровье",
+    "type": "expenses"
+  },
+  {
+    "title": "Транспорт",
+    "type": "expenses"
+  },
+  {
+    "title": "Все для дома",
+    "type": "expenses"
+  },
+  {
+    "title": "Техника",
+    "type": "expenses"
+  },
+  {
+    "title": "Комуналка, связь",
+    "type": "expenses"
+  },
+  {
+    "title": "Спорт, хобби",
+    "type": "expenses"
+  },
+  {
+    "title": "Оброзование",
+    "type": "expenses"
+  },
+  {
+    "title": "Прочее",
+    "type": "expenses"
+  },
+  {
+    "title": "ЗП",
+    "type": "incomes"
+  },
+  {
+    "title": "Доп. доход",
+    "type": "incomes"
+  }
+]
