@@ -6,7 +6,7 @@ const { categories: ctrl } = require('../../controllers')
 
 const categoryValidation = validation(joiSchema)
 
-router.get('/', ctrl.getAllCategories)
+router.get('/', authenticate, ctrl.getAllCategories)
 router.post('/', authenticate, categoryValidation, ctrl.createCategory)
 router.delete('/:categoryId', authenticate, ctrl.deleteCategory)
 

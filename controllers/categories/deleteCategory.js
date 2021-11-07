@@ -10,7 +10,7 @@ const deleteCategory = async (req, res, next) => {
       res.status(404).json({
         status: 'error',
         code: 404,
-        message: `Category with ID=${category.categoryId} not found`,
+        message: `❌ Category with ID=${category.categoryId} not found`,
       })
       return
     }
