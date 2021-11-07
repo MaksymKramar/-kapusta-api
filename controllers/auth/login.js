@@ -1,6 +1,6 @@
 const { User } = require('../../models')
 const jwt = require('jsonwebtoken')
-// const { BadRequest, NotFound } = require('http-errors')
+const { NotFound } = require('http-errors')
 
 const login = async (req, res) => {
   try {
@@ -10,12 +10,12 @@ const login = async (req, res) => {
     // console.log(user)
 
     if (!user || !user.comparePassword(password)) {
-      res.json({
-        status: 'error',
-        code: 400,
-        message: 'Email or password is wrong',
-      })
-      // throw new NotFound('Email or password is wrong')
+      // res.json({
+      //   status: 'error',
+      //   code: 400,
+      //   message: 'Email or password is wrong',
+      // })
+      throw new NotFound('Email or password is wrong')
     }
     const { _id } = user
     const payload = {
@@ -26,7 +26,7 @@ const login = async (req, res) => {
     const token = jwt.sign(payload, SECRET_KEY)
 
     await User.findByIdAndUpdate(user._id, { token })
-  
+
     res.json({
       status: 'success',
       code: 200,
@@ -35,7 +35,7 @@ const login = async (req, res) => {
       },
     })
   } catch (error) {
-    res.status(401).json(error)
+    res.status(400).json(error)
   }
 }
 
