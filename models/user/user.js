@@ -40,4 +40,8 @@ const joiSchema = Joi.object({
 })
 
 const User = model('user', userSchema)
-module.exports = { User, joiSchema }
+
+module.exports = {
+  User,
+  joiSchema,
+}
