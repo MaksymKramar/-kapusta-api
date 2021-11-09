@@ -10,5 +10,6 @@ router.post('/signup', userValidation, ctrl.signup)
 router.post('/login', userValidation, ctrl.login)
 router.get('/logout', authenticate, ctrl.logout)
 router.patch('/', authenticate, ctrl.updateBalance)
+router.get('/current', authenticate, ctrl.current)
 
 module.exports = router
