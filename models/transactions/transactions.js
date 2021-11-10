@@ -11,10 +11,15 @@ const transactionSchema = Schema(
     },
     category: {
       type: String,
+      required: true,
       enum: ["expenses", "incomes"],
     },
     sum: {
       type: Number,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
     },
   },
   { versionKey: false }
@@ -23,7 +28,7 @@ const transactionSchema = Schema(
 const joiTransactionSchema = Joi.object({
   //   date: Joi.date(),
   description: Joi.string(),
-  category: Joi.string(),
+  category: Joi.string().required(),
   sum: Joi.number(),
 });
 

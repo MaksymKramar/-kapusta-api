@@ -12,7 +12,7 @@ const deleteById = async (req, res) => {
     throw new NotFound(`Not found`); /* Проброс в error catch */
   }
 
-  sendSuccessRes(res, { message: "contact deleted" });
+  sendSuccessRes(res, { message: "transaction deleted" });
 };
 
 module.exports = deleteById;
