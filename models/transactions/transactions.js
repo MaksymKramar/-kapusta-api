@@ -9,10 +9,14 @@ const transactionSchema = Schema(
     description: {
       type: String,
     },
-    category: {
-      type: String,
-      required: true,
-      enum: ["expenses", "incomes"],
+    // category: {
+    //   type: String,
+    //   required: true,
+    //   enum: ["expenses", "incomes"],
+    // },
+    type: {
+      type: Boolean,
+      default: false,
     },
     sum: {
       type: Number,
@@ -28,7 +32,7 @@ const transactionSchema = Schema(
 const joiTransactionSchema = Joi.object({
   //   date: Joi.date(),
   description: Joi.string(),
-  category: Joi.string().required(),
+  // category: Joi.string().required(),
   sum: Joi.number(),
 });
 
