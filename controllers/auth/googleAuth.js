@@ -61,16 +61,16 @@ exports.googleRedirect = async (req, res) => {
     console.log(payload)
     const token = jwt.sign(payload, SECRET_KEY)
     await User.findByIdAndUpdate(user._id, { token })
-
-    res.json({
-      status: '✔️ Success',
-      code: 200,
-      data: {
-        name: user.name,
-        email: user.email,
-        token,
-      },
-    })
+    return user.name, user.email, token
+    // res.json({
+    //   status: '✔️ Success',
+    //   code: 200,
+    //   data: {
+    //     name: user.name,
+    //     email: user.email,
+    //     token,
+    //   },
+    // })
   }
 
   const password = v4()
@@ -81,13 +81,11 @@ exports.googleRedirect = async (req, res) => {
   await newUser.save()
   await addDefaultcategories(newUser._id)
 
-  res.status(201).json({
-    status: 'success',
-    code: 201,
-    message: `✔️ Success register`,
-    newUser,
-  })
-  // return res.redirect(
-  //   `${process.env.FRONTEND_URL}?email=${userData.data.email}`,
-  // )
+  // res.status(201).json({
+  //   status: 'success',
+  //   code: 201,
+  //   message: `✔️ Success register`,
+  //   newUser,
+  // })
+  return res.redirect(`${process.env.FRONTEND_URL}`)
 }
