@@ -88,5 +88,5 @@ exports.googleRedirect = async (req, res) => {
   //   newUser,
   // })
 
-  // return res.redirect(`${process.env.FRONTEND_URL}`)
+  return res.redirect(`${process.env.FRONTEND_URL}`)
 }
