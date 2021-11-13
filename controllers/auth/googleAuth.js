@@ -4,6 +4,7 @@ const { v4 } = require('uuid')
 const jwt = require('jsonwebtoken')
 const { User } = require('../../models')
 const addDefaultcategories = require('../../helpers/addDefaultcategories')
+const { token } = require('morgan')
 
 exports.googleAuth = async (req, res) => {
   const stringifiedParams = queryString.stringify({
@@ -61,7 +62,7 @@ exports.googleRedirect = async (req, res) => {
     console.log(payload)
     const token = jwt.sign(payload, SECRET_KEY)
     await User.findByIdAndUpdate(user._id, { token })
-    return user.name, user.email, token
+    return token
     // res.json({
     //   status: '✔️ Success',
     //   code: 200,
@@ -87,5 +88,6 @@ exports.googleRedirect = async (req, res) => {
   //   message: `✔️ Success register`,
   //   newUser,
   // })
-  return res.redirect(`${process.env.FRONTEND_URL}`)
+  return token
+  // return res.redirect(`${process.env.FRONTEND_URL}`)
 }
