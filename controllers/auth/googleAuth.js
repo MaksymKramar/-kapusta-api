@@ -50,7 +50,7 @@ exports.googleRedirect = async (req, res) => {
   // console.log(userData.data)
 
   const user = await User.findOne({ email })
-  console.log(user)
+  // console.log(user)
 
   if (user) {
     const { SECRET_KEY } = process.env
@@ -81,17 +81,18 @@ exports.googleRedirect = async (req, res) => {
 
   newUser.setPassword(password)
   await newUser.save()
-  await addDefaultcategories(newUser._id)
+  // console.log(newUser)
+  // await addDefaultcategories(newUser._id)
   const { SECRET_KEY } = process.env
   const { _id } = newUser
   const payload = {
     _id,
   }
-  // console.log(user)
+
   // console.log(payload)
   const token = jwt.sign(payload, SECRET_KEY)
-  const userToken = await User.findByIdAndUpdate(user._id, { token })
-  return res.redirect(`${process.env.FRONTEND_URL}?token=${userToken.token}`)
+  await User.findByIdAndUpdate(_id, { token })
+  return res.redirect(`${process.env.FRONTEND_URL}?token=${token}`)
   // res.status(201).json({
   //   status: 'success',
   //   code: 201,
