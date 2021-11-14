@@ -82,7 +82,7 @@ exports.googleRedirect = async (req, res) => {
   newUser.setPassword(password)
   await newUser.save()
   // console.log(newUser)
-  // await addDefaultcategories(newUser._id)
+  await addDefaultcategories(newUser._id)
   const { SECRET_KEY } = process.env
   const { _id } = newUser
   const payload = {
