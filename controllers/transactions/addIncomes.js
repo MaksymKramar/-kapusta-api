@@ -3,6 +3,7 @@ const { sendSuccessRes } = require('../../utils')
 
 const addIncomes = async (req, res) => {
   const { _id } = req.user
+
   const newTransaction = { ...req.body, owner: _id }
   const user = await User.findById(_id)
   // console.log(user.balance)
