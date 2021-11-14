@@ -1,17 +1,26 @@
-const { Schema, model } = require('mongoose')
-const Joi = require('joi')
+const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
 const transactionSchema = Schema(
   {
-    //   date: {
-    //     type: Date,
-    //   },
+    date: {
+      type: String,
+    },
+    day: {
+      type: String,
+    },
+    month: {
+      type: String,
+    },
+    year: {
+      type: String,
+    },
     description: {
       type: String,
     },
     category: {
       type: Schema.Types.ObjectId,
-      ref: 'category',
+      ref: "category",
       required: true,
     },
     type: {
@@ -23,20 +32,20 @@ const transactionSchema = Schema(
     },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: "user",
     },
   },
-  { versionKey: false },
-)
+  { versionKey: false }
+);
 
 const joiTransactionSchema = Joi.object({
-  //   date: Joi.date(),
+  date: Joi.string(),
   description: Joi.string(),
   category: Joi.string().required(),
   sum: Joi.number(),
   type: Joi.boolean().required(),
-})
+});
 
-const Transaction = model('transaction', transactionSchema)
+const Transaction = model("transaction", transactionSchema);
 
-module.exports = { Transaction, joiTransactionSchema }
+module.exports = { Transaction, joiTransactionSchema };
