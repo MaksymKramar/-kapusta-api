@@ -57,20 +57,21 @@ exports.googleRedirect = async (req, res) => {
     const payload = {
       _id,
     }
-    console.log(user)
-    console.log(payload)
+    // console.log(user)
+    // console.log(payload)
     const token = jwt.sign(payload, SECRET_KEY)
-    await User.findByIdAndUpdate(user._id, { token })
+    const userToken = await User.findByIdAndUpdate(user._id, { token })
+    return res.redirect(`${process.env.FRONTEND_URL}?token=${userToken.token}`)
 
-    res.json({
-      status: '✔️ Success',
-      code: 200,
-      data: {
-        name: user.name,
-        email: user.email,
-        token,
-      },
-    })
+    // res.json({
+    //   status: '✔️ Success',
+    //   code: 200,
+    //   data: {
+    //     name: user.name,
+    //     email: user.email,
+    //     token,
+    //   },
+    // })
   }
 
   const password = v4()
@@ -80,13 +81,20 @@ exports.googleRedirect = async (req, res) => {
   newUser.setPassword(password)
   await newUser.save()
   await addDefaultcategories(newUser._id)
-
+  const { SECRET_KEY } = process.env
+  const { _id } = user
+  const payload = {
+    _id,
+  }
+  // console.log(user)
+  // console.log(payload)
+  const token = jwt.sign(payload, SECRET_KEY)
+  const userToken = await User.findByIdAndUpdate(user._id, { token })
+  return res.redirect(`${process.env.FRONTEND_URL}?token=${userToken.token}`)
   // res.status(201).json({
   //   status: 'success',
   //   code: 201,
   //   message: `✔️ Success register`,
   //   newUser,
   // })
-
-  return res.redirect(`https://trello.com/b/zYlKt9X0/mindstorm-reactnodejs`)
 }
