@@ -47,9 +47,10 @@ exports.googleRedirect = async (req, res) => {
   })
   // console.log(userData.data)
   const { email, name } = userData.data
-  console.log(email)
+  // console.log(userData.data)
 
   const user = await User.findOne({ email })
+  console.log(user)
 
   if (user) {
     const { SECRET_KEY } = process.env
@@ -82,9 +83,9 @@ exports.googleRedirect = async (req, res) => {
   await newUser.save()
   await addDefaultcategories(newUser._id)
   const { SECRET_KEY } = process.env
-  const { _id } = user
+  const { id } = user
   const payload = {
-    _id,
+    id,
   }
   // console.log(user)
   // console.log(payload)
