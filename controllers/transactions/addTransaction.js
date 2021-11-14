@@ -41,49 +41,6 @@ const addTransaction = async (req, res) => {
   } catch (error) {
     res.status(400).json(error.message)
   }
-
-  //   console.log(user.balance)
-
-  //   if (!type) {
-  //     const newBalance = user.balance - sum
-
-  //       await User.findByIdAndUpdate(
-  //         _id,
-  //         { balance: newBalance },
-  //         {
-  //           new: true,
-  //         },
-  //       )
-  //       const result = await Transaction.create(newTransaction)
-
-  //   }
-  //   const newBalance = user.balance + sum
-
-  //   await User.findByIdAndUpdate(
-  //     _id,
-  //     { balance: newBalance },
-  //     {
-  //       new: true,
-  //     },
-  //   )
-  //   const result = await Transaction.create(newTransaction)
-  //   sendSuccessRes(res, { result }, 201)
-
-  //   console.log(newBalance)
-
-  //   try {
-  //     await User.findByIdAndUpdate(
-  //       _id,
-  //       { balance: newBalance },
-  //       {
-  //         new: true,
-  //       },
-  //     )
-  //     const result = await Transaction.create(newTransaction)
-  //     sendSuccessRes(res, { result }, 201)
-  //   } catch (error) {
-  //     res.status(400).json(error.message)
-  //   }
 }
 
 module.exports = addTransaction
