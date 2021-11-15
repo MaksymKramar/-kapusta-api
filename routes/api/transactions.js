@@ -30,14 +30,14 @@ router.post(
 );
 
 router.get(
-  "/transactionsByMonth",
+  "/:monthId",
   authenticate,
   // validation(joiTransactionSchema),
   ctrl.getTransByMonth
 );
 
 router.get(
-  "/transactionsByMonthAndYear",
+  "/infoByMonthAndYear",
   authenticate,
   // validation(joiTransactionSchema),
   ctrl.getTransByMonthAndYear
