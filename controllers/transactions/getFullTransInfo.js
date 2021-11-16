@@ -47,8 +47,38 @@ const getTransByMonthAndYear = async (req, res) => {
       },
     },
   ])
-  sendSuccessRes(res, { sums }, 200)
-  //   console.log(sums)
+  const categorySums = await Transaction.aggregate([
+    {
+      $match: {
+        owner: user._id,
+        month: month,
+        year: year,
+        type: typeBool,
+      },
+    },
+    {
+      $group: {
+        _id: {
+          month: '$month',
+          year: '$year',
+          category: '$category',
+          type: '$type',
+        },
+        totalCategory: { $sum: '$sum' },
+      },
+    },
+
+    {
+      $project: {
+        _id: 0,
+        group: '$_id.category',
+        totalCategory: 1,
+      },
+    },
+  ])
+
+  sendSuccessRes(res, { sums, categorySums }, 200)
+  console.log(sums)
 }
 
 module.exports = getTransByMonthAndYear
