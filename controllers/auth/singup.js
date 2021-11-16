@@ -21,7 +21,13 @@ const signup = async (req, res) => {
       status: 'success',
       code: 201,
       message: `✔️ Success register`,
-      newUser,
+      data: {
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
+        token: newUser.token,
+        balance: newUser.balance,
+      },
     })
   } catch (error) {
     res.status(409).json(error)

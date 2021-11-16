@@ -11,8 +11,8 @@ const userValidation = validation(joiSchema)
 router.post('/signup', userValidation, ctrl.signup)
 router.post('/login', userValidation, ctrl.login)
 router.get('/logout', authenticate, ctrl.logout)
-router.patch('/', authenticate, ctrl.updateBalance)
-router.get('/current', authenticate, ctrl.current)
+router.patch('/user', authenticate, ctrl.updateBalance)
+router.get('/user/current', authenticate, ctrl.current)
 
 router.get('/google', tryCatchWrapper(ctrl.googleAuth))
 
