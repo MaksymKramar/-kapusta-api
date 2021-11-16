@@ -2,14 +2,11 @@ const { Transaction, User } = require('../../models')
 const { sendSuccessRes } = require('../../utils')
 
 const addTransaction = async (req, res) => {
-  //   console.log(req.body.type)
   const { _id } = req.user
-  const { type } = req.body
-  const { sum } = req.body
+  const { type, sum, date } = req.body
 
-  console.log(type)
-
-  const newTransaction = { ...req.body, owner: _id }
+  const [day, month, year] = date.split('.')
+  const newTransaction = { ...req.body, owner: _id, day, month, year }
   const user = await User.findById(_id)
 
   try {

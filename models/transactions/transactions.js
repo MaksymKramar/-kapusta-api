@@ -3,9 +3,19 @@ const Joi = require('joi')
 
 const transactionSchema = Schema(
   {
-    //   date: {
-    //     type: Date,
-    //   },
+    date: {
+      type: String,
+      required: true,
+    },
+    day: {
+      type: String,
+    },
+    month: {
+      type: String,
+    },
+    year: {
+      type: String,
+    },
     description: {
       type: String,
     },
@@ -30,7 +40,7 @@ const transactionSchema = Schema(
 )
 
 const joiTransactionSchema = Joi.object({
-  //   date: Joi.date(),
+  date: Joi.string().required(),
   description: Joi.string(),
   category: Joi.string().required(),
   sum: Joi.number(),

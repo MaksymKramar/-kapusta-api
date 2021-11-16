@@ -4,17 +4,17 @@ const { NotFound } = require('http-errors')
 
 // eslint-disable-next-line no-unused-vars
 const deleteById = async (req, res) => {
-  // console.log(req.params);
   const { _id } = req.user
   const user = await User.findById(_id)
-  console.log(user.balance)
+  console.log(user)
   const { transactionId } = req.params
-  // console.log(req.params)
+
   const transaction = await Transaction.findById(transactionId)
   const { type } = transaction
   const { sum } = transaction
   console.log(type)
   console.log(sum)
+
   try {
     if (!type) {
       const newBalance = user.balance + sum

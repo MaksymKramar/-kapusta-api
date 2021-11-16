@@ -1,6 +1,11 @@
-const addExpenses = require('./addExpenses')
-const addIncomes = require('./addIncomes')
 const deleteById = require('./deleteById')
 const addTransaction = require('./addTransaction')
+const getTransByMonth = require('./getTransByMonth')
+const getFullTransInfo = require('./getFullTransInfo')
 
-module.exports = { addExpenses, addIncomes, deleteById, addTransaction }
+module.exports = {
+  deleteById,
+  addTransaction,
+  getTransByMonth,
+  getFullTransInfo,
+}
