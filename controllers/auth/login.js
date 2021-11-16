@@ -30,10 +30,12 @@ const login = async (req, res) => {
 
     res.json({
       status: '✔️ Success',
-      code: 200,
+      code: 201,
       data: {
+        _id: user._id,
         name: user.name,
         email: user.email,
+        balance: user.balance,
         token,
       },
     })

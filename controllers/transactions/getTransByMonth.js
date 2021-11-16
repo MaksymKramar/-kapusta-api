@@ -1,3 +1,4 @@
+
 const { Transaction } = require('../../models')
 const { User } = require('../../models')
 const { sendSuccessRes } = require('../../utils')
@@ -44,6 +45,7 @@ const getTransByMonth = async (req, res) => {
   } catch (error) {
     res.status(400).json(error)
   }
+
 }
 
 module.exports = getTransByMonth
