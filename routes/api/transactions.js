@@ -37,7 +37,7 @@ router.get(
 );
 
 router.get(
-  "/infoByMonthAndYear",
+  "/:infoByMonthAndYear",
   authenticate,
   // validation(joiTransactionSchema),
   ctrl.getTransByMonthAndYear
