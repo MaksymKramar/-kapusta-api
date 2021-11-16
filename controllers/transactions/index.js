@@ -1,9 +1,9 @@
-const addExpenses = require("./addExpenses");
-const addIncomes = require("./addIncomes");
-const deleteById = require("./deleteById");
-const addTransaction = require("./addTransaction");
-const getTransByMonth = require("./getTransByMonth");
-const getTransByMonthAndYear = require("./getTransByMonthAndYear");
+const addExpenses = require('./addExpenses')
+const addIncomes = require('./addIncomes')
+const deleteById = require('./deleteById')
+const addTransaction = require('./addTransaction')
+const getTransByMonth = require('./getTransByMonth')
+const getFullTransInfo = require('./getFullTransInfo')
 
 module.exports = {
   addExpenses,
@@ -11,5 +11,5 @@ module.exports = {
   deleteById,
   addTransaction,
   getTransByMonth,
-  getTransByMonthAndYear,
-};
+  getFullTransInfo,
+}
