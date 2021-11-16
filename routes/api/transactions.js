@@ -1,46 +1,46 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const { authenticate, validation } = require("../../middlewares");
+const { authenticate, validation } = require('../../middlewares')
 const {
   joiTransactionSchema,
-} = require("../../models/transactions/transactions");
-const { transactions: ctrl } = require("../../controllers/");
+} = require('../../models/transactions/transactions')
+const { transactions: ctrl } = require('../../controllers/')
 
 // router.get("/", authenticate, ctrl.getAllTransactions);
 router.post(
-  "/incomes",
+  '/incomes',
   authenticate,
   validation(joiTransactionSchema),
-  ctrl.addIncomes
-);
+  ctrl.addIncomes,
+)
 router.post(
-  "/expenses",
+  '/expenses',
   authenticate,
   validation(joiTransactionSchema),
-  ctrl.addExpenses
-);
-router.delete("/:transactionId", authenticate, ctrl.deleteById);
+  ctrl.addExpenses,
+)
+router.delete('/:transactionId', authenticate, ctrl.deleteById)
 
 router.post(
-  "/add",
+  '/add',
   authenticate,
   validation(joiTransactionSchema),
-  ctrl.addTransaction
-);
+  ctrl.addTransaction,
+)
 
 router.get(
-  "/:monthId",
+  '/:date',
   authenticate,
   // validation(joiTransactionSchema),
-  ctrl.getTransByMonth
-);
+  ctrl.getTransByMonth,
+)
 
 router.get(
-  "/:infoByMonthAndYear",
+  '/',
   authenticate,
   // validation(joiTransactionSchema),
-  ctrl.getTransByMonthAndYear
-);
+  ctrl.getFullTransInfo,
+)
 
-module.exports = router;
+module.exports = router
