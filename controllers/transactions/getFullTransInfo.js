@@ -9,7 +9,7 @@ const getTransByMonthAndYear = async (req, res) => {
     const { _id } = req.user
     // const user = req.user;
     const user = await User.findById(_id)
-    // console.log(user)
+    console.log(req.query)
     const { date } = req.query
     const { type = null } = req.query
     //   console.log(date)

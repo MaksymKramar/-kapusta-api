@@ -13,7 +13,7 @@ router.post('/login', userValidation, ctrl.login)
 router.get('/logout', authenticate, ctrl.logout)
 router.patch('/user', authenticate, ctrl.updateBalance)
 router.get('/user/current', authenticate, ctrl.current)
-router.get('/user/:useremail', authenticate, ctrl.getUserbyEmail)
+router.get('/user', ctrl.getUserbyEmail)
 
 router.get('/google', tryCatchWrapper(ctrl.googleAuth))
 
