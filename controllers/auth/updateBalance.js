@@ -18,10 +18,8 @@ const updateBalance = async (req, res) => {
         return
       }
     }
-    res.json({
-      status: 'error',
-      code: 404,
-      message: 'new balance should be bigger then 0 ',
+    res.status(404).json({
+      message: 'New balance should be a Number and should be bigger then "0"',
     })
   } catch (error) {
     res.status(404).json(error)
