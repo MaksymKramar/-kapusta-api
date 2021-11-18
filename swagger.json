@@ -12,8 +12,8 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "servers": [
-    { "url": "https://kapusta-backend-project.herokuapp.com" },
-    { "url": "http://localhost:3000" }
+    { "url": "https://kapusta-backend-project.herokuapp.com/api" },
+    { "url": "http://localhost:3000/api" }
   ],
   "tags": [
     {
@@ -29,8 +29,9 @@
       "description": "Categories endpoints"
     }
   ],
+
   "paths": {
-    "/api/auth/signup": {
+    "/auth/signup": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
@@ -72,7 +73,8 @@
         }
       }
     },
-    "/api/auth/login": {
+
+    "/auth/login": {
       "post": {
         "tags": ["Auth"],
         "summary": "User authorization",
@@ -88,7 +90,6 @@
             }
           }
         },
-
         "responses": {
           "201": {
             "description": "Successful operation, created",
@@ -106,6 +107,350 @@
           },
           "401": {
             "description": "Unauthorized (Email or password is wrong)",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/user": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "User balance update",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Balance's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/updateBalanceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation, updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/updateBalanceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (Email or password is wrong)",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/user/current": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Current user info",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (Email or password is wrong)",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "Logout success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (Email or password is wrong)",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/transactions/": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Full transaction info",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "type": "string",
+            "description": "Transactions type",
+            "example": "?type=false"
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "description": "Transactions date",
+            "example": "&date=04.2021"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsFulInfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid date or type)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Transactions"],
+        "summary": "Transaction delete by Id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "transactionId",
+            "required": true,
+            "type": "string",
+            "description": "Transaction's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success transaction delete",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Transaction with id not found",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/transactions//": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Transactions by month",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "description": "Transactions date",
+            "example": "04.2021"
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "type": "string",
+            "description": "Transactions type",
+            "example": "?type=false"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsByMonthResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid date or type)",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/transactions/add": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "New transaction create",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Transaction's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionsCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation, created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionsCreateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/categories/": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "New category create",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Categories's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryCreateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Create success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryCreateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "409": {
+            "description": "Category already exist",
+            "content": {}
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Category delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryId",
+            "required": true,
+            "type": "string",
+            "description": "Category's id"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryDeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Category with id not found",
             "content": {}
           }
         }
@@ -240,8 +585,348 @@
           "balance": 3000,
           "token": "yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfNOyDMrBtPvK3dExr09Yta563k"
         }
+      },
+      "LogoutResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Logout status",
+            "example": "Logout success"
+          }
+        }
+      },
+      "updateBalanceRequest": {
+        "type": "object",
+        "required": ["balance"],
+        "properties": {
+          "balance": {
+            "type": "number",
+            "description": "User's balance",
+            "example": 3000
+          }
+        }
+      },
+      "updateBalanceResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "balance": {
+            "type": "number",
+            "description": "User's balance",
+            "example": 3000
+          }
+        }
+      },
+      "currentUserResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "username"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "balance": {
+            "type": "number",
+            "description": "User's balance",
+            "example": 3000
+          }
+        }
+      },
+      "CategoriesResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Category's id",
+              "example": "6192c8b903ba3de5f6234eab"
+            },
+            "title": {
+              "type": "string",
+              "description": "Category's description",
+              "example": "Техника"
+            },
+            "type": {
+              "type": "boolean",
+              "description": "Category's type",
+              "example": "false"
+            },
+            "owner": {
+              "type": "string",
+              "description": "Category's owner",
+              "example": "6192c8b903ba3de5f6234ea7"
+            }
+          }
+        },
+        "example": [
+          {
+            "_id": "6192c8b903ba3de5f6234eaf",
+            "title": "Техника",
+            "type": "false",
+            "owner": "6192c8b903ba3de5f6234ea7"
+          },
+          {
+            "_id": "6192c8b903ba3de5f6234ea9",
+            "title": "Продукты",
+            "type": "false",
+            "owner": "6192c8b903ba3de5f6234ea7"
+          }
+        ]
+      },
+      "CategoryCreateRequest": {
+        "type": "object",
+        "reqtired": ["title", "type"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Category's name",
+            "example": "Автомобиль"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "Category's type",
+            "example": false
+          }
+        }
+      },
+      "CategoryCreateResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "New category name",
+            "example": "Автомобиль"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "New category type",
+            "example": "false"
+          },
+          "owner": {
+            "type": "string",
+            "description": "New category owner",
+            "example": "6192c8b903ba3de5f6234ea7"
+          },
+          "id": {
+            "type": "string",
+            "description": "New category id",
+            "example": "6196675be66efabe4a316197"
+          }
+        }
+      },
+      "CategoryDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Removing status",
+            "example": "Category deleted"
+          }
+        }
+      },
+      "TransactionsCreateRequest": {
+        "type": "object",
+        "required": ["date", "description", "sum", "type", "category"],
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Transaction date",
+            "example": "21.12.2021"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction description",
+            "example": "Здоровье"
+          },
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 3000
+          },
+          "type": {
+            "type": "boolean",
+            "description": "Transaction type",
+            "example": true
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "61913a6062f1398136d8a864"
+          }
+        }
+      },
+      "TransactionsCreateResponse": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "Transaction date",
+            "example": "21.12.2021"
+          },
+          "day": {
+            "type": "string",
+            "description": "Day of date",
+            "example": "21"
+          },
+          "month": {
+            "type": "string",
+            "description": "Month of date",
+            "example": "12"
+          },
+          "year": {
+            "type": "string",
+            "description": "Year of date",
+            "example": "2021"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction description",
+            "example": "Здоровье"
+          },
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 3000
+          },
+          "type": {
+            "type": "boolean",
+            "description": "Transaction type",
+            "example": true
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction category",
+            "example": "61913a6062f1398136d8a864"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Owner",
+            "example": "6192c8b903ba3de5f6234ea7"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Transacton id",
+            "example": "619651e5c1ae9c3789be4975"
+          }
+        }
+      },
+      "TransactionsByMonthResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Transacton id",
+            "example": "619651e5c1ae9c3789be4975"
+          },
+          "date": {
+            "type": "string",
+            "description": "Transaction date",
+            "example": "21.12.2021"
+          },
+          "description": {
+            "type": "string",
+            "description": "Transaction description",
+            "example": "Здоровье"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "Transaction type",
+            "example": true
+          },
+          "sum": {
+            "type": "number",
+            "description": "Transaction sum",
+            "example": 3000
+          }
+        }
+      },
+      "TransactionsFulInfoResponse": {
+        "type": "object",
+        "properties": {
+          "sums": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "total": {},
+                "group": {
+                  "type": "object",
+                  "properties": {
+                    "month": {
+                      "type": "string",
+                      "description": "Transactions month",
+                      "example": "04"
+                    },
+                    "year": {
+                      "type": "string",
+                      "description": "Transactions year",
+                      "example": "2021"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Transactions description",
+                      "example": "Алкоголь"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Transaction category",
+                      "example": "61913a6062f1398136d8a864"
+                    },
+                    "type": {
+                      "type": "boolean",
+                      "description": "Transaction type",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "categorySums": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "totalSums": {
+                  "type": "number",
+                  "description": "Sum by category",
+                  "example": 400
+                },
+                "group": {
+                  "type": "string",
+                  "description": "Category group",
+                  "exmaple": "61913a6062f1398136d8a864"
+                }
+              }
+            }
+          }
+        }
+      },
+      "TransactionDeleteResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Removing status",
+            "example": "Transaction deleted"
+          }
+        }
       }
     },
+
     "securitySchemes": {
       "Bearer": {
         "type": "http",
