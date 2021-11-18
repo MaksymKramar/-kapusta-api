@@ -7,8 +7,13 @@ const logout = async (req, res, next) => {
     // console.log(req.user)
     await User.findByIdAndUpdate(_id, { token: null });
 
+<<<<<<< Updated upstream
     res.json({
       status: "success",
+=======
+    res.status(204).res.json({
+      status: 'success',
+>>>>>>> Stashed changes
       code: 204,
       message: `✔️ Logout`,
     });
