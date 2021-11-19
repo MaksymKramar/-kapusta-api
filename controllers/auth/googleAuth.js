@@ -97,7 +97,7 @@ exports.googleRedirect = async (req, res) => {
   await User.findByIdAndUpdate(_id, { token })
   // const user = await User.findOne({ token })
   return res.redirect(
-    `${process.env.FRONTEND_URL}/google-redirect?useremail=${user.email}`,
+    `${process.env.FRONTEND_URL}google-redirect?useremail=${user.email}`,
   )
   // res.status(201).json({
   //   status: 'success',
