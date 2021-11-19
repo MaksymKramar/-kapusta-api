@@ -64,7 +64,7 @@ exports.googleRedirect = async (req, res) => {
     await User.findByIdAndUpdate(user._id, { token })
     const newUser = await User.findOne({ token })
     return res.redirect(
-      `${process.env.FRONTEND_URL}?useremail=${newUser.email}`,
+      `${process.env.FRONTEND_URL}/google-redirect?useremail=${newUser.email}`,
     )
 
     // res.json({
@@ -96,7 +96,9 @@ exports.googleRedirect = async (req, res) => {
   const token = jwt.sign(payload, SECRET_KEY)
   await User.findByIdAndUpdate(_id, { token })
   // const user = await User.findOne({ token })
-  return res.redirect(`${process.env.FRONTEND_URL}?useremail=${user.email}`)
+  return res.redirect(
+    `${process.env.FRONTEND_URL}/google-redirect?useremail=${user.email}`,
+  )
   // res.status(201).json({
   //   status: 'success',
   //   code: 201,
