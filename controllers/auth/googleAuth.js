@@ -64,7 +64,7 @@ exports.googleRedirect = async (req, res) => {
     await User.findByIdAndUpdate(user._id, { token })
     const newUser = await User.findOne({ token })
     return res.redirect(
-      `${process.env.FRONTEND_URL}/google-redirect?useremail=${newUser.email}`,
+      `${process.env.FRONTEND_URL}google-redirect?useremail=${newUser.email}`,
     )
 
     // res.json({
