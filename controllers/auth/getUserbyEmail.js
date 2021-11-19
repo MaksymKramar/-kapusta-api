@@ -2,7 +2,7 @@ const { User } = require('../../models')
 
 const getUserbyEmail = async (req, res) => {
   try {
-    const { useremail } = req.query
+    const { useremail } = req.params
     console.log(useremail)
     const currentUser = await User.findOne({ email: useremail })
     console.log(currentUser)
