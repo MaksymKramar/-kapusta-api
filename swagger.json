@@ -146,6 +146,37 @@
             "content": {}
           }
         }
+      },
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Current user info by email",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "useremail",
+            "required": true,
+            "type": "string",
+            "description": "Current user's email",
+            "example": "example@gmail.com"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserEmaileResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Wrong email",
+            "content": {}
+          }
+        }
       }
     },
 
@@ -641,6 +672,34 @@
             "type": "number",
             "description": "User's balance",
             "example": 3000
+          }
+        }
+      },
+      "CurrentUserEmaileResponse": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Current user's name",
+            "format": "name",
+            "example": "Freddie"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "balance": {
+            "type": "integer",
+            "description": "User's balance",
+            "format": "number",
+            "example": "10000"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "format": "jwt",
+            "example": "eyJfaWQiOiI2MTkxM2E2MDYyZjEzOTgxMzZkOGE4NjAiLCJpYXQiOjE2MzY5MDc2MjR9.W9a9Dbl8zqeMEp6kpykcyo6u85_g3-DC4a-gNgB9vkk"
           }
         }
       },
