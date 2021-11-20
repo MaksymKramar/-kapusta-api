@@ -92,7 +92,7 @@ const getTransByMonthAndYear = async (req, res) => {
     if (!sums.length) {
       throw new NotFound('There is no any transaction ')
     }
-    console.log(sums.length)
+    // console.log(sums.length)
     sendSuccessRes(res, { sums, categorySums }, 200)
     // console.log(sums)
   } catch (error) {
