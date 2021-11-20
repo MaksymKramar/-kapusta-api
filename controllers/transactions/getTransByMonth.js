@@ -1,4 +1,3 @@
-
 const { Transaction } = require('../../models')
 const { User } = require('../../models')
 const { sendSuccessRes } = require('../../utils')
@@ -34,9 +33,9 @@ const getTransByMonth = async (req, res) => {
 
     const transactionsByUser = await Transaction.find(
       optionSearch,
-      'date sum type description',
+      '_id date sum type category description',
     )
-
+    // console.log(transactionsByUser)
     const totalAmount = transactionsByUser
       .map((item) => item.sum)
       .reduce((a, b) => a + b)
@@ -45,7 +44,6 @@ const getTransByMonth = async (req, res) => {
   } catch (error) {
     res.status(400).json(error)
   }
-
 }
 
 module.exports = getTransByMonth
