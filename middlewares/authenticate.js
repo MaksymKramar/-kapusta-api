@@ -46,7 +46,11 @@ const authenticate = async (req, res, next) => {
     req.user = user
     next()
   } catch (error) {
-    res.json(error)
+    res.status(401).json({
+      status: 'error',
+      code: 401,
+      message: 'Not authorized',
+    })
   }
 }
 

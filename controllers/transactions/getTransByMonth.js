@@ -1,7 +1,7 @@
 const { Transaction } = require('../../models')
 const { User } = require('../../models')
 const { sendSuccessRes } = require('../../utils')
-const { BadRequest } = require('http-errors')
+const { BadRequest, NotFound } = require('http-errors')
 
 //http://localhost:3000/api/transactions/10.2021?type=false
 const getTransByMonth = async (req, res) => {
@@ -11,10 +11,11 @@ const getTransByMonth = async (req, res) => {
     const user = await User.findById(_id)
     // console.log(user)
     const { date } = req.params
-    console.log(date)
+    // console.log(date)
     const [month, year] = date.split('.')
     const { type = null } = req.query
     const optionSearch = { owner: user._id, month: month, year: year }
+    console.log(type)
     if (type !== null) {
       optionSearch.type = type
     }
@@ -35,7 +36,10 @@ const getTransByMonth = async (req, res) => {
       optionSearch,
       '_id date sum type category description',
     )
-    // console.log(transactionsByUser)
+    console.log(transactionsByUser)
+    if (!transactionsByUser.length) {
+      throw new NotFound('There is no any transaction ')
+    }
     const totalAmount = transactionsByUser
       .map((item) => item.sum)
       .reduce((a, b) => a + b)
