@@ -1,12 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const { User } = require('../models')
-// const { SECRET_KEY } = process.env
-
-// console.log({ SECRET_KEY })
 
 const authenticate = async (req, res, next) => {
-  // console.log(req.headers.authorization)
   const { authorization } = req.headers
   if (!authorization) {
     res.status(401).json({
@@ -18,7 +14,6 @@ const authenticate = async (req, res, next) => {
   }
 
   const [bearer, token] = authorization.split(' ')
-  // console.log([bearer, token])
 
   if (bearer !== 'Bearer') {
     res.status(401).json({
@@ -30,9 +25,7 @@ const authenticate = async (req, res, next) => {
   }
   try {
     const { SECRET_KEY } = process.env
-    // console.log({ SECRET_KEY })
     const { _id } = jwt.verify(token, SECRET_KEY)
-    // console.log(jwt.verify(token, SECRET_KEY))
     const user = await User.findById({ _id })
 
     if (!user.token) {

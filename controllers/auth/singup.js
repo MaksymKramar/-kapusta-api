@@ -5,7 +5,6 @@ const addDefaultcategories = require('../../helpers/addDefaultcategories')
 const signup = async (req, res) => {
   try {
     const { name, email, password, balance } = req.body
-    // console.log(req.body)
     const user = await User.findOne({ email })
 
     if (user) {

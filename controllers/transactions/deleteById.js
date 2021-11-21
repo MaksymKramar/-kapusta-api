@@ -6,16 +6,11 @@ const { NotFound } = require('http-errors')
 const deleteById = async (req, res) => {
   const { _id } = req.user
   const user = await User.findById(_id)
-  // console.log(user)
   const { transactionId } = req.params
   try {
     const transaction = await Transaction.findById(transactionId)
-    console.log(transaction)
-
     const { type } = transaction
     const { sum } = transaction
-    console.log(type)
-    console.log(sum)
 
     if (!type) {
       const newBalance = user.balance + sum
@@ -29,7 +24,7 @@ const deleteById = async (req, res) => {
       )
       const result = await Transaction.findByIdAndDelete(transactionId)
       if (!result) {
-        throw new NotFound(`Not found`) /* Проброс в error catch */
+        throw new NotFound(`Not found`)
       }
       sendSuccessRes(res, { message: 'transaction deleted' })
     } else {
@@ -44,7 +39,7 @@ const deleteById = async (req, res) => {
       )
       const result = await Transaction.findByIdAndDelete(transactionId)
       if (!result) {
-        throw new NotFound(`Not found`) /* Проброс в error catch */
+        throw new NotFound(`Not found`)
       }
 
       sendSuccessRes(res, { message: 'transaction deleted' })

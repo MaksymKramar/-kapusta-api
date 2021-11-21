@@ -45,12 +45,10 @@ exports.googleRedirect = async (req, res) => {
       Authorization: `Bearer ${tokenData.data.access_token}`,
     },
   })
-  // console.log(userData.data)
-  const { email, name } = userData.data
-  // console.log(userData.data)
 
+  const { email, name } = userData.data
   const user = await User.findOne({ email })
-  // console.log(user)
+ 
 
   if (user) {
     const { SECRET_KEY } = process.env
@@ -58,8 +56,7 @@ exports.googleRedirect = async (req, res) => {
     const payload = {
       _id,
     }
-    // console.log(user)
-    // console.log(payload)
+    
     const token = jwt.sign(payload, SECRET_KEY)
     await User.findByIdAndUpdate(user._id, { token })
     const newUser = await User.findOne({ token })
@@ -67,24 +64,16 @@ exports.googleRedirect = async (req, res) => {
       `${process.env.FRONTEND_URL}google-redirect?useremail=${newUser.email}`,
     )
 
-    // res.json({
-    //   status: '✔️ Success',
-    //   code: 200,
-    //   data: {
-    //     name: user.name,
-    //     email: user.email,
-    //     token,
-    //   },
-    // })
+    
   }
 
   const password = v4()
-  // console.log(password)
+ 
   const newUser = new User({ name, email })
 
   newUser.setPassword(password)
   await newUser.save()
-  // console.log(newUser)
+
   await addDefaultcategories(newUser._id)
   const { SECRET_KEY } = process.env
   const { _id } = newUser
@@ -92,17 +81,12 @@ exports.googleRedirect = async (req, res) => {
     _id,
   }
 
-  // console.log(payload)
+
   const token = jwt.sign(payload, SECRET_KEY)
   await User.findByIdAndUpdate(_id, { token })
-  // const user = await User.findOne({ token })
+  
   return res.redirect(
     `${process.env.FRONTEND_URL}google-redirect?useremail=${user.email}`,
   )
-  // res.status(201).json({
-  //   status: 'success',
-  //   code: 201,
-  //   message: `✔️ Success register`,
-  //   newUser,
-  // })
+ 
 }

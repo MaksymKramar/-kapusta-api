@@ -2,22 +2,16 @@ const { Transaction } = require('../../models')
 const { User } = require('../../models')
 const { sendSuccessRes } = require('../../utils')
 const { BadRequest, NotFound } = require('http-errors')
-//http://localhost:3000/api/transactions/?type=true&date=09.2020
 
 const getTransByMonthAndYear = async (req, res) => {
   try {
     const { _id } = req.user
-    // const user = req.user;
     const user = await User.findById(_id)
-    console.log(req.query)
     const { date } = req.query
     const { type = null } = req.query
-    //   console.log(date)
     const [month, year] = date.split('.')
-    //   console.log(month, year)
+    const typeBool = JSON.parse(type)
 
-    const typeBool = JSON.parse(type) //(from string to bool)
-    //   console.log(typeBool)
     if (
       month > 12 ||
       month < 0 ||
@@ -92,9 +86,7 @@ const getTransByMonthAndYear = async (req, res) => {
     if (!sums.length) {
       throw new NotFound('There is no any transaction ')
     }
-    // console.log(sums.length)
     sendSuccessRes(res, { sums, categorySums }, 200)
-    // console.log(sums)
   } catch (error) {
     res.status(400).json(error)
   }

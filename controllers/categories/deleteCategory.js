@@ -4,7 +4,6 @@ const deleteCategory = async (req, res, next) => {
   try {
     const { categoryId } = req.params
     const category = { categoryId, owner: req.user._id }
-    // console.log(category)
     const result = await Category.findByIdAndDelete(category.categoryId)
     if (!result) {
       res.status(404).json({

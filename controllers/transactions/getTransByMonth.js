@@ -7,19 +7,15 @@ const { BadRequest, NotFound } = require('http-errors')
 const getTransByMonth = async (req, res) => {
   try {
     const { _id } = req.user
-    // const user = req.user;
     const user = await User.findById(_id)
-    // console.log(user)
     const { date } = req.params
-    // console.log(date)
+
     const [month, year] = date.split('.')
     const { type = null } = req.query
     const optionSearch = { owner: user._id, month: month, year: year }
-    console.log(type)
     if (type !== null) {
       optionSearch.type = type
     }
-    // console.log(month, year)
     if (
       month > 12 ||
       month < 0 ||
@@ -36,7 +32,6 @@ const getTransByMonth = async (req, res) => {
       optionSearch,
       '_id date sum type category description',
     )
-    console.log(transactionsByUser)
     if (!transactionsByUser.length) {
       throw new NotFound('There is no any transaction ')
     }
