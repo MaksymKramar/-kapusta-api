@@ -5,6 +5,8 @@ const updateBalance = require('./updateBalance')
 const current = require('./current')
 const getUserbyEmail = require('./getUserbyEmail')
 const { googleAuth, googleRedirect } = require('./googleAuth')
+const getBalance = require('./getBalance')
+
 
 module.exports = {
   signup,
@@ -15,4 +17,5 @@ module.exports = {
   getUserbyEmail,
   googleAuth,
   googleRedirect,
+  getBalance
 }
