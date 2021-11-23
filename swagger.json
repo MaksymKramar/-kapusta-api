@@ -180,6 +180,31 @@
       }
     },
 
+    "/auth/user/balance": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Current user's balance",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currentUserBalanceResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
     "/auth/user/current": {
       "get": {
         "tags": ["Auth"],
@@ -671,6 +696,16 @@
           "balance": {
             "type": "number",
             "description": "User's balance",
+            "example": 3000
+          }
+        }
+      },
+      "currentUserBalanceResponse": {
+        "type": "object",
+        "properties": {
+          "balance": {
+            "type": "number",
+            "description": "Current user's balance",
             "example": 3000
           }
         }
