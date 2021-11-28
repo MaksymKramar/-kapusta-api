@@ -1,7 +1,7 @@
 const { Transaction } = require('../../models')
 const { User } = require('../../models')
 const { sendSuccessRes } = require('../../utils')
-const { BadRequest, NotFound } = require('http-errors')
+const { BadRequest } = require('http-errors')
 
 const getTransByMonthAndYear = async (req, res) => {
   try {
@@ -84,7 +84,12 @@ const getTransByMonthAndYear = async (req, res) => {
       },
     ])
     if (!sums.length) {
-      throw new NotFound('There is no any transaction ')
+      res.status(200).json({
+        status: 'success',
+        code: 200,
+        message: 'there is no transactions',
+        data: [],
+      })
     }
     sendSuccessRes(res, { sums, categorySums }, 200)
   } catch (error) {
