@@ -4,9 +4,16 @@ const { sendSuccessRes } = require('../../utils')
 const addTransaction = async (req, res) => {
   const { _id } = req.user
   const { type, sum, date } = req.body
+  console.log(date)
 
   const [day, month, year] = date.split('.')
-  const newTransaction = { ...req.body, owner: _id, day, month, year }
+  const newTransaction = {
+    ...req.body,
+    owner: _id,
+    day,
+    month,
+    year,
+  }
   const user = await User.findById(_id)
 
   try {

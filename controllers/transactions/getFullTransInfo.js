@@ -11,6 +11,10 @@ const getTransByMonthAndYear = async (req, res) => {
     const { type = null } = req.query
     const [month, year] = date.split('.')
     const typeBool = JSON.parse(type)
+    const monthNum = Number(month)
+    const yearNum = Number(year)
+    console.log(monthNum)
+    console.log(yearNum)
 
     if (
       month > 12 ||
@@ -28,8 +32,8 @@ const getTransByMonthAndYear = async (req, res) => {
       {
         $match: {
           owner: user._id,
-          month: month,
-          year: year,
+          month: monthNum,
+          year: yearNum,
           type: typeBool,
         },
       },
@@ -58,8 +62,8 @@ const getTransByMonthAndYear = async (req, res) => {
       {
         $match: {
           owner: user._id,
-          month: month,
-          year: year,
+          month: monthNum,
+          year: yearNum,
           type: typeBool,
         },
       },

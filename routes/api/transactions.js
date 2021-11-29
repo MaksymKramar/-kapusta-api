@@ -6,6 +6,7 @@ const {
   joiTransactionSchema,
 } = require('../../models/transactions/transactions')
 const { transactions: ctrl } = require('../../controllers/')
+router.get('/report', authenticate, ctrl.reportsByMonths)
 
 router.delete('/:transactionId', authenticate, ctrl.deleteById)
 
