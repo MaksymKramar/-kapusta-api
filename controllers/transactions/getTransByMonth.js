@@ -12,17 +12,11 @@ const getTransByMonth = async (req, res) => {
 
     const [month, year] = date.split('.')
     const { type = null } = req.query
-    const optionSearch = { owner: user._id, month: month, year: year }
+    const optionSearch = { owner: user._id, month: Number(month), year: year }
     if (type !== null) {
       optionSearch.type = type
     }
-    if (
-      month > 12 ||
-      month < 0 ||
-      month.length !== 2 ||
-      year.length !== 4 ||
-      type === null
-    ) {
+    if (month > 12 || month < 0 || year.length !== 4 || type === null) {
       throw new BadRequest(
         'Check searchQuery, example: "http://localhost:3000/api/transactions/10.2021?type=false"  ',
       )
