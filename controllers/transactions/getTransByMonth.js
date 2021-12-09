@@ -22,18 +22,28 @@ const getTransByMonth = async (req, res) => {
       )
     }
 
-    const transactionsByUser = await Transaction.find(
+    const transactions = await Transaction.find(
       optionSearch,
-      '_id date sum type category description',
+      '_id date day sum type category description',
     )
+    const transactionsByUser = transactions.sort((a, b) =>
+      a.day > b.day ? 1 : -1,
+    )
+
+    // console.log(sortBydate)
     if (!transactionsByUser.length) {
       throw new NotFound('There is no any transaction ')
     }
-    const totalAmount = transactionsByUser
+    const totalAmount = transactions
       .map((item) => item.sum)
       .reduce((a, b) => a + b)
 
-    sendSuccessRes(res, { transactionsByUser, totalAmount }, 200)
+    sendSuccessRes(
+      res,
+      // sortBydate,
+      { transactionsByUser, totalAmount },
+      200,
+    )
   } catch (error) {
     res.status(400).json(error)
   }
