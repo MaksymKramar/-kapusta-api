@@ -4,7 +4,7 @@ const { sendSuccessRes } = require('../../utils')
 const addTransaction = async (req, res) => {
   const { _id } = req.user
   const { type, sum, date } = req.body
-  console.log(date)
+  console.log(req.user)
 
   const [day, month, year] = date.split('.')
   const newTransaction = {
